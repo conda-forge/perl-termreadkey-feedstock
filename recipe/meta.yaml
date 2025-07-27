@@ -12,7 +12,13 @@ source:
 
 build:
   skip: true   # [win]
-  number: 0
+  number: 1
+  script:
+    - perl Makefile.PL INSTALLDIRS=vendor
+    - make
+    - make test      # [build_platform == target_platform]
+    - make install
+
   run_exports:
     weak:
       - {{ name }} ={{ version }}
@@ -21,6 +27,7 @@ requirements:
   build:
     - make
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
   host:
     - perl
   run:
